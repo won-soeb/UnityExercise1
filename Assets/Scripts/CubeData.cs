@@ -1,30 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CubeData : MonoBehaviour
 {
-    private int heroHp = 0;
-    private int heroMaxHp = 0;
-
-    private void Awake()
+    CubeController cubeController;
+    [SerializeField] private Text countText;
+    private void Start()
     {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
-    public void UpdateHeroHpAndMaxHp(int heroHp, int heroMaxHp)
-    {
-        this.heroHp = heroHp;
-        this.heroMaxHp = heroMaxHp;
-    }
-
-    public int GetHeroHp()
-    {
-        return this.heroHp;
-    }
-
-    public int GetHeroMaxHp()
-    {
-        return this.heroMaxHp;
+        cubeController = FindAnyObjectByType<CubeController>();
+        countText.text = cubeController.UpdaterCountData().ToString();
     }
 }

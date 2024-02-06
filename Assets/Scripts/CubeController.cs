@@ -2,38 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class CubeController : MonoBehaviour
 {
-    public int MaxHp
+    private int count=0;
+    [SerializeField]private Button countBtn;
+    [SerializeField]private Button nextBtn;
+    [SerializeField]private Text countText;
+    private void Awake()
     {
-        get; set;
+        DontDestroyOnLoad(gameObject);
     }
-
-    public int Hp
-    {
-        get; set;
-    }
-
-    public Action onHit;
-
     private void Start()
     {
-        this.MaxHp = 10;
-        this.Hp = this.MaxHp;
-        Debug.LogFormat("{0}/{1}", this.Hp, this.MaxHp);
-    }
-
-    void Update()
-    {
-        //화면을 클릭하면 피해를 받는다 
-        if (Input.GetMouseButtonDown(0))
+        countBtn.onClick.AddListener(() => {
+            ++count;
+            countText.text = count.ToString();
+        });
+        nextBtn.onClick.AddListener(() =>
         {
-            this.Hp -= 1;
-            if (this.Hp <= 0) this.Hp = 0;
-            Debug.LogFormat("{0}/{1}", this.Hp, this.MaxHp);
-
-            this.onHit();   //대리자 호출 
-        }
+            SceneManager.LoadScene("NextScene");
+        });
+    }
+    public int UpdaterCountData()
+    {
+        return count;
     }
 }
